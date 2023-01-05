@@ -11,7 +11,7 @@ from keras import backend as K
 
 from data import load_train_data, load_test_data
 
-K.common.set_image_dim_ordering('th')  # Theano dimension ordering in this code  .common added
+K.set_image_data_format('th')  # Theano dimension ordering in this code   K.set_image_dim_ordering('th')
 
 img_rows = 100
 img_cols = 160
