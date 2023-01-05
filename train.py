@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from keras.models import Model
 from keras.layers import LeakyReLU
-from keras.layers import Input, merge, SpatialDropout2D
+from keras.layers import Input, SpatialDropout2D   # merge,
 from keras.layers import Convolution2D, AveragePooling2D, UpSampling2D
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint, EarlyStopping
@@ -57,7 +57,7 @@ def create_model():
     conv3 = LeakyReLU()(conv3)
     conv3 = SpatialDropout2D(0.2)(conv3)
     
-    comb1 = merge([conv2, UpSampling2D(size=(2,2))(conv3)], mode='concat', concat_axis=1)
+    comb1 = concatenate([conv2, UpSampling2D(size=(2,2))(conv3)], mode='concat', concat_axis=1)
     conv4 = Convolution2D(64, 3, 3, border_mode='same', init='he_normal')(comb1)
     conv4 = LeakyReLU()(conv4)
     conv4 = SpatialDropout2D(0.2)(conv4)
@@ -65,7 +65,7 @@ def create_model():
     conv4 = LeakyReLU()(conv4)
     conv4 = SpatialDropout2D(0.2)(conv4)
     
-    comb2 = merge([conv1, UpSampling2D(size=(2,2))(conv4)], mode='concat', concat_axis=1)
+    comb2 = concatenate([conv1, UpSampling2D(size=(2,2))(conv4)], mode='concat', concat_axis=1)
     conv5 = Convolution2D(32, 3, 3, border_mode='same', init='he_normal')(comb2)
     conv5 = LeakyReLU()(conv5)
     conv5 = SpatialDropout2D(0.2)(conv5)
